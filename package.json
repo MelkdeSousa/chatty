@@ -5,6 +5,12 @@
   "repository": "git@github.com:MelkdeSousa/chatty.git",
   "author": "MelkdeSousa <melk.sousap@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "server": "tsnd ./src/server.ts --watch",
+    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
   "devDependencies": {
     "@types/express": "^4.17.11",
     "@types/node": "^14.14.41",
@@ -15,6 +21,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.0.2",
     "typeorm": "^0.2.32",
     "uuid": "^8.3.2"
   }
