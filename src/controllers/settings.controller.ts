@@ -1,14 +1,27 @@
 import { Request, Response } from 'express'
+import { ResponseError } from '../lib/errors/response'
 
 import SettingService from '../services/settings.service'
 
+interface SettingBody {
+  chat: boolean
+  username: string
+}
+
 class SettingsController {
   async create(req: Request, res: Response) {
-    const { chat, username } = req.body
+    try {
+      const { chat, username } = req.body as SettingBody
 
-    const setting = await new SettingService().createSetting({ chat, username })
+      const settingsService = new SettingService()
 
-    return res.status(201).json(setting)
+      const setting = await settingsService.createSetting({ chat, username })
+
+      return res.status(201).json(setting)
+    } catch (err) {
+      const { statusCode, message } = err as ResponseError
+      return res.status(statusCode).json({ error: message })
+    }
   }
 }
 
