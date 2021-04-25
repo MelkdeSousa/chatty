@@ -8,6 +8,10 @@ interface SettingBody {
   username: string
 }
 
+interface SettingParams {
+  username: string
+}
+
 class SettingsController {
   async create(req: Request, res: Response) {
     try {
@@ -21,6 +25,33 @@ class SettingsController {
     } catch (err) {
       const { statusCode, message } = err as ResponseError
       return res.status(statusCode).json({ error: message })
+    }
+  }
+
+  async update(req: Request<SettingParams, any, SettingBody>, res: Response) {
+    const { username } = req.params
+    const { chat } = req.body
+
+    const settingsService = new SettingService()
+
+    await settingsService.updateChat(username, chat)
+
+    return res.status(200)
+  }
+
+  async findByUsername(req: Request<SettingParams>, res: Response) {
+    const { username } = req.params
+
+    try {
+      const settingsService = new SettingService()
+
+      const settings = await settingsService.findByUsername(username)
+
+      return res.status(200).json(settings)
+    } catch (err) {
+      const { statusCode, message } = err as ResponseError
+
+      return res.status(statusCode).json(message)
     }
   }
 }

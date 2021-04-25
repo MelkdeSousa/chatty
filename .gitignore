@@ -109,3 +109,4 @@ dist
 # http
 *.http
 *.rest
+*.zip

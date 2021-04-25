@@ -36,6 +36,29 @@ class SettingService {
 
     return setting
   }
+
+  async findByUsername(username: string): Promise<Setting | undefined> {
+    const setting = await this.settingRepository.findOne({ username })
+
+    if (!setting)
+      throw new ErrorResponse({
+        message: 'Setting not exists',
+        statusCode: 404,
+      })
+
+    return setting
+  }
+
+  async updateChat(username: string, chat: boolean): Promise<void> {
+    await this.settingRepository
+      .createQueryBuilder()
+      .update(Setting)
+      .set({ chat })
+      .where('username= :username', {
+        username,
+      })
+      .execute()
+  }
 }
 
 export default SettingService
