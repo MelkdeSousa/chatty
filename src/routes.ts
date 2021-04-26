@@ -11,6 +11,7 @@ const usersController = new UsersController()
 const messagesController = new MessagesController()
 
 routes.get('/pages/client', (_, res) => res.render('html/client'))
+routes.get('/pages/admin', (_, res) => res.render('html/admin'))
 
 routes.post('/settings', settingsController.create)
 routes.get('/settings/:username', settingsController.findByUsername)

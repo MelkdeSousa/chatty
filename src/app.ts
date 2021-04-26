@@ -1,4 +1,5 @@
 import './websocket/client'
+import './websocket/admin'
 import { serverHttp } from './server'
 
 const PORT = 3333
